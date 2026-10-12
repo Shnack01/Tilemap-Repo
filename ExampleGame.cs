@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using static TilemapExercise.Tilemap;
+using System.IO;
 namespace TilemapExercise;
 
 public class Game1 : Game
 {
+    private Tilemap _tilemap;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
@@ -19,7 +21,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
-
+        _tilemap = new Tilemap(Path.Combine(Content.RootDirectory, "map.txt"));
         base.Initialize();
     }
 
@@ -28,6 +30,7 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
+        _tilemap.LoadContent(Content);
     }
 
     protected override void Update(GameTime gameTime)
@@ -43,9 +46,10 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-
+        _spriteBatch.Begin();
         // TODO: Add your drawing code here
-
+        _tilemap.Draw(gameTime, _spriteBatch);
+        _spriteBatch.End();
         base.Draw(gameTime);
     }
 }
